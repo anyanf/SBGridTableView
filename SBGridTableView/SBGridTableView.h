@@ -7,8 +7,11 @@
 
 #import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+#import "SBGridTableCollectionViewFlowLayout.h"
+#import "SBCollectionViewLayoutAttributes.h"
 
+
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, SBGridTableViewType) {
     SBGridTableViewTypeSectionAndRowFixation,    //  行列固定
@@ -95,6 +98,12 @@ typedef NS_ENUM(NSUInteger, SBGridTableViewCellType) {
 /** 停止滚动时 */
 - (void)gridTableViewDidEndScroll:(SBGridTableView *)gridTableView;
 
+/** 通过layout获取指定indexpath的layoutAttributes */
+- (nullable SBCollectionViewLayoutAttributes *)gridTableView:(SBGridTableView *)gridTableView
+                layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath
+                                                    cellType:(SBGridTableViewCellType)cellType;
+
+
 @end
 
 
@@ -114,9 +123,16 @@ typedef NS_ENUM(NSUInteger, SBGridTableViewCellType) {
 
 - (void)registerClass:(nullable Class)cellClass forCellWithReuseIdentifier:cellID;
 
+- (void)registerClass:(nullable Class)viewClass forDecorationViewOfKind:(NSString *)elementKind;
+
+
 - (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier
                                                    forDataSourceIndexPath:(NSIndexPath *)dataSourceIndexPath
                                                                  cellType:(SBGridTableViewCellType)cellType;
+
+- (nullable UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)elementKind
+                                                                           atIndexPath:(NSIndexPath *)dataSourceIndexPath
+                                                                              cellType:(SBGridTableViewCellType)cellType;
 
 - (void)scrollToItemAtIndexPath:(NSIndexPath *)indexPath
                atScrollPosition:(UICollectionViewScrollPosition)scrollPosition

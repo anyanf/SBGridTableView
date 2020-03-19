@@ -7,7 +7,6 @@
 
 #import "SBGridTableView.h"
 
-#import "SBGridTableCollectionViewFlowLayout.h"
 
 @implementation SBGridTableViewIndexPath
 
@@ -26,7 +25,7 @@ SBGridTableCollectionViewFlowLayoutDataSource
  */
 @property (nonatomic, strong) UICollectionView *mainCollectionView;
 
-@property (nonatomic, strong) SBGridTableCollectionViewFlowLayout *mainLayout;
+@property (nonatomic, strong, readwrite) SBGridTableCollectionViewFlowLayout *mainLayout;
 
 @property (nonatomic, assign) SBGridTableViewType fixationType;
 
@@ -166,6 +165,10 @@ SBGridTableCollectionViewFlowLayoutDataSource
     [self.mainCollectionView registerClass:cellClass forCellWithReuseIdentifier:cellID];
 }
 
+- (void)registerClass:(nullable Class)viewClass forDecorationViewOfKind:(NSString *)elementKind {
+    [self.mainLayout registerClass:viewClass forDecorationViewOfKind:elementKind];
+}
+
 - (__kindof UICollectionViewCell *)dequeueReusableCellWithReuseIdentifier:(NSString *)identifier
                                                    forDataSourceIndexPath:(NSIndexPath *)dataSourceIndexPath
                                                                  cellType:(SBGridTableViewCellType)cellType {
@@ -181,6 +184,15 @@ SBGridTableCollectionViewFlowLayoutDataSource
                                     atScrollPosition:scrollPosition
                                             animated:animated];
     
+}
+
+- (nullable UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString*)elementKind
+                                                                           atIndexPath:(NSIndexPath *)dataSourceIndexPath
+                                                                              cellType:(SBGridTableViewCellType)cellType {
+    
+    NSIndexPath *indexPath = [self getCollectionViewIndexPath:dataSourceIndexPath cellType:cellType];
+    return [self.mainLayout layoutAttributesForDecorationViewOfKind:elementKind
+                                                        atIndexPath:indexPath];
 }
 
 - (CGPoint)contentOffset {
@@ -268,6 +280,18 @@ SBGridTableCollectionViewFlowLayoutDataSource
     return [_dataSource gridTableView:self
                sizeForItemAtIndexPath:dataSourceIndexPath
                              cellType:cellType];
+}
+
+- (nullable SBCollectionViewLayoutAttributes *)flowLayout:(SBGridTableCollectionViewFlowLayout *)flowLayout layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath {
+    NSIndexPath *dataSourceIndexPath = [self getDataSourceIndexPath:indexPath];
+    SBGridTableViewCellType cellType = [self getCellTypeWithIndexPath:indexPath];
+    
+    if ([_dataSource respondsToSelector:@selector(layoutAttributesForDecorationViewOfKind:atIndexPath:)]) {
+        return [_dataSource gridTableView:self layoutAttributesForDecorationViewAtIndexPath:dataSourceIndexPath
+                                 cellType:cellType];
+    } else {
+        return nil;
+    }
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout

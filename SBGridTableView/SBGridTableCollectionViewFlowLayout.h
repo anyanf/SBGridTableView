@@ -9,9 +9,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class SBGridTableCollectionViewFlowLayout;
+@class SBCollectionViewLayoutAttributes;
+
 @protocol SBGridTableCollectionViewFlowLayoutDataSource <NSObject>
 
 - (CGSize)sizeForItemAtIndexPath:(NSIndexPath *)indexPath;
+
+- (nullable SBCollectionViewLayoutAttributes *)flowLayout:(SBGridTableCollectionViewFlowLayout *)flowLayout layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath;
 
 @end
 

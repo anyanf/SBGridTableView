@@ -7,12 +7,14 @@
 
 #import "SBGridTableCollectionViewFlowLayout.h"
 
+#import "SBCollectionViewLayoutAttributes.h"
+
 @interface SBGridTableCollectionViewFlowLayout ()
 
 /** 所有item的布局  */
-@property (nonatomic, strong) NSMutableArray *itemAttributes;
+@property (nonatomic, strong) NSMutableArray<NSMutableArray<UICollectionViewLayoutAttributes *> *> *itemAttributes;
 /** 一行里面所有item的宽，每一行都是一样的  */
-@property (nonatomic, strong) NSMutableArray *itemsSize;
+@property (nonatomic, strong) NSMutableArray<NSMutableArray<NSValue *> *> *itemsSize;
 /** collectionView的contentSize大小  */
 @property (nonatomic, assign) CGSize contentSize;
 
@@ -32,9 +34,12 @@
     for (NSInteger section = 0; section<[self.collectionView numberOfSections]; section++) {
         NSMutableArray *sectionsSize = [NSMutableArray arrayWithCapacity:0];
         for (NSInteger row = 0; row < [self.collectionView numberOfItemsInSection:section]; row++) {
-            CGSize itemSize = [_dataSource sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
-            NSValue *itemSizeValue = [NSValue valueWithCGSize:itemSize];
-            [sectionsSize addObject:itemSizeValue];
+            
+            if ([_dataSource respondsToSelector:@selector(sizeForItemAtIndexPath:)]) {
+                CGSize itemSize = [_dataSource sizeForItemAtIndexPath:[NSIndexPath indexPathForRow:row inSection:section]];
+                NSValue *itemSizeValue = [NSValue valueWithCGSize:itemSize];
+                [sectionsSize addObject:itemSizeValue];
+            }
         }
         [self.itemsSize addObject:sectionsSize];
     }
@@ -201,18 +206,74 @@
     return self.itemAttributes[indexPath.section][indexPath.row];
 }
 
-- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
+- (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
     
     NSMutableArray *attributes = [@[] mutableCopy];
-    for (NSArray *section in self.itemAttributes) {
-        [attributes addObjectsFromArray:[section filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *evaluatedObject, NSDictionary *bindings) {
+    
+    for (NSArray<UICollectionViewLayoutAttributes *> *section in self.itemAttributes) {
+        
+        // 只计算屏幕显示的
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *evaluatedObject,
+                                              NSDictionary *bindings) {
             CGRect frame = [evaluatedObject frame];
             return CGRectIntersectsRect(rect, frame);
-        }]]];
+        }];
+        
+        NSArray<UICollectionViewLayoutAttributes *> *sectionAttrs = [section filteredArrayUsingPredicate:predicate];
+        
+        [attributes addObjectsFromArray:sectionAttrs];
+        
+        
+        if (sectionAttrs.count > 0) {
+            // 装饰view
+            if ([self.dataSource respondsToSelector:@selector(flowLayout:layoutAttributesForDecorationViewAtIndexPath:)]) {
+                SBCollectionViewLayoutAttributes *decorationAttr = [self.dataSource flowLayout:self layoutAttributesForDecorationViewAtIndexPath:sectionAttrs.firstObject.indexPath];
+                
+                if (decorationAttr) {
+                    [attributes addObject:decorationAttr];
+                }
+            }
+        }
+
     }
+    
+    
     
     return attributes;
 }
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForDecorationViewOfKind:(NSString *)elementKind
+                                                                  atIndexPath:(NSIndexPath *)indexPath {
+    
+    SBCollectionViewLayoutAttributes *attributes = [SBCollectionViewLayoutAttributes layoutAttributesForDecorationViewOfKind:elementKind withIndexPath: indexPath];
+
+    NSArray<UICollectionViewLayoutAttributes *> *sectionAttrs = self.itemAttributes[indexPath.section];
+    
+    if (sectionAttrs.count == 0) {
+        return nil;
+    }
+    
+    CGRect attrFrame = CGRectZero;
+    for (int i = 0; i < sectionAttrs.count; i++) {
+        
+        UICollectionViewLayoutAttributes *attributes = sectionAttrs[i];
+        if (i == 0) {
+            attrFrame.origin.x = attributes.frame.origin.x;
+            attrFrame.origin.y = attributes.frame.origin.y;
+        }
+        
+        if (i == sectionAttrs.count - 1) {
+            attrFrame.size.width = CGRectGetMaxX(attributes.frame);
+        }
+        
+        attrFrame.size.height = MAX(attrFrame.size.height, attributes.frame.size.height);
+    }
+    
+    attributes.frame = attrFrame;
+    attributes.zIndex -= 1;
+    return attributes;
+}
+
 
 - (CGSize)collectionViewContentSize{
     return  _contentSize;

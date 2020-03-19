@@ -19,14 +19,19 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = UIColor.grayColor;
-        
+
         _lbl = [[UILabel alloc] initWithFrame:self.bounds];
         _lbl.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_lbl];
         
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.lbl.frame = self.bounds;
 }
 
 @end

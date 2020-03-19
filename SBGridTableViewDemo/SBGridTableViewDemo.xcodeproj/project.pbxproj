@@ -17,6 +17,8 @@
 		55608940242255FC005A1190 /* SBCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560893F242255FC005A1190 /* SBCollectionViewCell.m */; };
 		5560894824226A31005A1190 /* SBGridTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560894524226A31005A1190 /* SBGridTableView.m */; };
 		5560894924226A31005A1190 /* SBGridTableCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560894624226A31005A1190 /* SBGridTableCollectionViewFlowLayout.m */; };
+		5560894C24234619005A1190 /* XFGridHightlightDecorationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560894B24234619005A1190 /* XFGridHightlightDecorationView.m */; };
+		5560894F2423763E005A1190 /* SBCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 5560894E2423763E005A1190 /* SBCollectionViewLayoutAttributes.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,10 @@
 		5560894524226A31005A1190 /* SBGridTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGridTableView.m; sourceTree = "<group>"; };
 		5560894624226A31005A1190 /* SBGridTableCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBGridTableCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		5560894724226A31005A1190 /* SBGridTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBGridTableView.h; sourceTree = "<group>"; };
+		5560894A24234619005A1190 /* XFGridHightlightDecorationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XFGridHightlightDecorationView.h; sourceTree = "<group>"; };
+		5560894B24234619005A1190 /* XFGridHightlightDecorationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XFGridHightlightDecorationView.m; sourceTree = "<group>"; };
+		5560894D2423763E005A1190 /* SBCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SBCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
+		5560894E2423763E005A1190 /* SBCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SBCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +84,8 @@
 				5560892424224B37005A1190 /* ViewController.h */,
 				5560892524224B37005A1190 /* ViewController.m */,
 				5560893E242255FC005A1190 /* SBCollectionViewCell.h */,
+				5560894A24234619005A1190 /* XFGridHightlightDecorationView.h */,
+				5560894B24234619005A1190 /* XFGridHightlightDecorationView.m */,
 				5560893F242255FC005A1190 /* SBCollectionViewCell.m */,
 				5560892724224B37005A1190 /* Main.storyboard */,
 				5560892A24224B39005A1190 /* Assets.xcassets */,
@@ -95,6 +103,8 @@
 				5560894624226A31005A1190 /* SBGridTableCollectionViewFlowLayout.m */,
 				5560894724226A31005A1190 /* SBGridTableView.h */,
 				5560894524226A31005A1190 /* SBGridTableView.m */,
+				5560894D2423763E005A1190 /* SBCollectionViewLayoutAttributes.h */,
+				5560894E2423763E005A1190 /* SBCollectionViewLayoutAttributes.m */,
 			);
 			name = SBGridTableView;
 			path = ../../SBGridTableView;
@@ -172,8 +182,10 @@
 			files = (
 				5560892624224B37005A1190 /* ViewController.m in Sources */,
 				55608940242255FC005A1190 /* SBCollectionViewCell.m in Sources */,
+				5560894F2423763E005A1190 /* SBCollectionViewLayoutAttributes.m in Sources */,
 				5560894924226A31005A1190 /* SBGridTableCollectionViewFlowLayout.m in Sources */,
 				5560894824226A31005A1190 /* SBGridTableView.m in Sources */,
+				5560894C24234619005A1190 /* XFGridHightlightDecorationView.m in Sources */,
 				5560892024224B37005A1190 /* AppDelegate.m in Sources */,
 				5560893124224B39005A1190 /* main.m in Sources */,
 				5560892324224B37005A1190 /* SceneDelegate.m in Sources */,

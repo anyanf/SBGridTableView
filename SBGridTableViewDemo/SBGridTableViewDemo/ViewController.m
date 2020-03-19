@@ -9,7 +9,9 @@
 #import "ViewController.h"
 
 #import "SBGridTableView.h"
+
 #import "SBCollectionViewCell.h"
+#import "XFGridHightlightDecorationView.h"
 
 
 @interface ViewController ()
@@ -35,12 +37,23 @@ SBGridTableViewDataSource
     
     [_gridTableView registerClass:SBCollectionViewCell.class
        forCellWithReuseIdentifier:NSStringFromClass(SBCollectionViewCell.class)];
-    
+    [_gridTableView registerClass:XFGridHightlightDecorationView.class
+          forDecorationViewOfKind:NSStringFromClass(XFGridHightlightDecorationView.class)];
     _gridTableView.minimumInteritemSpacing = 5;
     _gridTableView.minimumLineSpacing = 10;
     
     [self.view addSubview:self.gridTableView];
     
+//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
+//    animation.fromValue=(__bridge id _Nullable)(UIColor.yellowColor.CGColor);
+//    animation.toValue=(__bridge id _Nullable)(UIColor.redColor.CGColor);
+//    animation.autoreverses=YES;
+//    animation.duration=2;
+//    animation.repeatCount=FLT_MAX;
+//    animation.removedOnCompletion=NO;
+//    animation.fillMode=kCAFillModeForwards;
+//    
+//    [self.view.layer addAnimation:animation forKey:@"backgroundColor"];
 }
 
 
@@ -72,7 +85,7 @@ SBGridTableViewDataSource
 
 
 - (NSInteger)numberOfSectionsInGridTableView:(SBGridTableView *)gridTableView {
-    return 10;
+    return 30;
 }
 
 - (NSInteger)numberOfSuspendSectionsInGridTableView:(SBGridTableView *)gridTableView {
@@ -88,16 +101,34 @@ SBGridTableViewDataSource
                cellType:(SBGridTableViewCellType)cellType {
     if (indexPath.section == 5) {
         if (indexPath.row == 3) {
-            return CGSizeMake(100, 30);
+            return CGSizeMake(100, 64);
         }
-        return CGSizeMake(100, 20);
+        return CGSizeMake(100, 44);
     }
-    return CGSizeMake(65, 20);
+    return CGSizeMake(65, 44);
 }
 
 - (void)gridTableView:(SBGridTableView *)gridTableView didSelectItemAtIndexPath:(NSIndexPath *)indexPath cellType:(SBGridTableViewCellType)cellType {
     NSLog(@"%s", __func__);
 }
 
+//- (nullable UICollectionViewLayoutAttributes *)gridTableView:(SBGridTableView *)gridTableView
+//                layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath
+//                                                    cellType:(SBGridTableViewCellType)cellType {
+//    UICollectionViewLayoutAttributes *layoutAttributes = [gridTableView layoutAttributesForDecorationViewOfKind:NSStringFromClass(XFGridHightlightDecorationView.class)
+//                                            atIndexPath:indexPath cellType:cellType];
+//
+//    if ([layoutAttributes isKindOfClass:SBCollectionViewLayoutAttributes.class]) {
+//        SBCollectionViewLayoutAttributes *attrs = (SBCollectionViewLayoutAttributes *)layoutAttributes;
+//        if (indexPath.section%3 == 1) {
+//            attrs.model = indexPath;
+//            return attrs;
+//        }
+//
+//    }
+//
+//
+//    return nil;
+//}
 
 @end
