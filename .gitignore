@@ -1,0 +1,14 @@
+.idea/
+
+Podfile.lock
+Pods
+
+.vscode
+
+.DS_Store
+
+xcuserdata/
+*.xcuserdata
+
+
+IDEWorkspaceChecks.plist
