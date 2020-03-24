@@ -286,7 +286,7 @@ SBGridTableCollectionViewFlowLayoutDataSource
     NSIndexPath *dataSourceIndexPath = [self getDataSourceIndexPath:indexPath];
     SBGridTableViewCellType cellType = [self getCellTypeWithIndexPath:indexPath];
     
-    if ([_dataSource respondsToSelector:@selector(layoutAttributesForDecorationViewOfKind:atIndexPath:)]) {
+    if ([_dataSource respondsToSelector:@selector(gridTableView:layoutAttributesForDecorationViewAtIndexPath:cellType:)]) {
         return [_dataSource gridTableView:self layoutAttributesForDecorationViewAtIndexPath:dataSourceIndexPath
                                  cellType:cellType];
     } else {
