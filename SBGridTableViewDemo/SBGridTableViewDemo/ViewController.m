@@ -44,16 +44,10 @@ SBGridTableViewDataSource
     
     [self.view addSubview:self.gridTableView];
     
-//    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"backgroundColor"];
-//    animation.fromValue=(__bridge id _Nullable)(UIColor.yellowColor.CGColor);
-//    animation.toValue=(__bridge id _Nullable)(UIColor.redColor.CGColor);
-//    animation.autoreverses=YES;
-//    animation.duration=2;
-//    animation.repeatCount=FLT_MAX;
-//    animation.removedOnCompletion=NO;
-//    animation.fillMode=kCAFillModeForwards;
-//    
-//    [self.view.layer addAnimation:animation forKey:@"backgroundColor"];
+
+    double hehe = @"--".doubleValue;
+    
+    
 }
 
 
@@ -112,23 +106,23 @@ SBGridTableViewDataSource
     NSLog(@"%s", __func__);
 }
 
-//- (nullable UICollectionViewLayoutAttributes *)gridTableView:(SBGridTableView *)gridTableView
-//                layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath
-//                                                    cellType:(SBGridTableViewCellType)cellType {
-//    UICollectionViewLayoutAttributes *layoutAttributes = [gridTableView layoutAttributesForDecorationViewOfKind:NSStringFromClass(XFGridHightlightDecorationView.class)
-//                                            atIndexPath:indexPath cellType:cellType];
-//
-//    if ([layoutAttributes isKindOfClass:SBCollectionViewLayoutAttributes.class]) {
-//        SBCollectionViewLayoutAttributes *attrs = (SBCollectionViewLayoutAttributes *)layoutAttributes;
-//        if (indexPath.section%3 == 1) {
-//            attrs.model = indexPath;
-//            return attrs;
-//        }
-//
-//    }
-//
-//
-//    return nil;
-//}
+- (nullable UICollectionViewLayoutAttributes *)gridTableView:(SBGridTableView *)gridTableView
+                layoutAttributesForDecorationViewAtIndexPath:(NSIndexPath *)indexPath
+                                                    cellType:(SBGridTableViewCellType)cellType {
+    UICollectionViewLayoutAttributes *layoutAttributes = [gridTableView layoutAttributesForDecorationViewOfKind:NSStringFromClass(XFGridHightlightDecorationView.class)
+                                            atIndexPath:indexPath cellType:cellType];
+
+    if ([layoutAttributes isKindOfClass:SBCollectionViewLayoutAttributes.class]) {
+        SBCollectionViewLayoutAttributes *attrs = (SBCollectionViewLayoutAttributes *)layoutAttributes;
+        if (indexPath.section == 4) {
+            attrs.model = indexPath;
+            return attrs;
+        }
+
+    }
+
+
+    return nil;
+}
 
 @end
