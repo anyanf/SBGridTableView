@@ -21,6 +21,8 @@ SBGridTableViewDataSource
 
 @property (nonatomic, strong) SBGridTableView *gridTableView;
 
+@property (nonatomic, assign) NSInteger rowCount;
+
 @end
 
 @implementation ViewController
@@ -28,6 +30,9 @@ SBGridTableViewDataSource
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    
+    self.rowCount = 30;
     
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
     _gridTableView = [[SBGridTableView alloc] initWithFrame:CGRectMake(0, 100, screenSize.width, 300)
@@ -44,8 +49,6 @@ SBGridTableViewDataSource
     
     [self.view addSubview:self.gridTableView];
     
-
-    double hehe = @"--".doubleValue;
     
     
 }
@@ -71,6 +74,12 @@ SBGridTableViewDataSource
                                                                 forDataSourceIndexPath:indexPath
                                                                               cellType:cellType];
     
+    if (cellType == SBGridTableViewCellTypeSuspendSection) {
+        cell.contentView.backgroundColor = UIColor.blueColor;
+    } else {
+        cell.contentView.backgroundColor = UIColor.yellowColor;
+    }
+    
     cell.lbl.text = [NSString stringWithFormat:@"%zi - %zi", indexPath.section, indexPath.row];
     
     return cell;
@@ -79,7 +88,7 @@ SBGridTableViewDataSource
 
 
 - (NSInteger)numberOfSectionsInGridTableView:(SBGridTableView *)gridTableView {
-    return 30;
+    return self.rowCount;
 }
 
 - (NSInteger)numberOfSuspendSectionsInGridTableView:(SBGridTableView *)gridTableView {
@@ -125,4 +134,9 @@ SBGridTableViewDataSource
     return nil;
 }
 
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    self.rowCount -= 2;
+    [self.gridTableView reload];
+}
 @end
