@@ -9,6 +9,7 @@ iOS表格控件
 
 - [ ] 表格cell增加一种横竖锁定公共的类型。
 - [ ] 装饰view支持区分或者不区分不同的类型cell。
+- [ ] 优化SBGridTableView index 和 celltype：目前section的itemnumber不能差异化
 
 
 
